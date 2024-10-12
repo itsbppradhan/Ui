@@ -29,22 +29,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UiTheme {
-                Start()
+                Start(glass)
             }
         }
     }
 }
 
-
 @Composable
-fun Start() {
-    Scaffold(containerColor = Color.Transparent,modifier = Modifier.fillMaxSize()) { innerPadding ->
-        Greeting(
-            name = "Android",
-            modifier = Modifier.padding(innerPadding)
-        )
+fun Start(glass: Glass) {
+    glass.BlurAlphaWrapper {
+        Scaffold(
+            containerColor = Color.Transparent,
+            modifier = Modifier.fillMaxSize()
+        ) { innerPadding ->
+            Greeting(
+                name = "Android",
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
     }
 }
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(

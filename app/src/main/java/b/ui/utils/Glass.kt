@@ -4,11 +4,17 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
 import android.view.View
-import android.view.View.OnAttachStateChangeListener
 import android.view.Window
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.window.Popup
+import androidx.core.content.ContextCompat
 import b.ui.R
 
 class Glass(
@@ -24,6 +30,8 @@ class Glass(
     private var windowBackgroundAlphaNoBlur = 255 // 100% opacity
     private var windowBackgroundDrawable: ColorDrawable? = null
 
+    var isBlurEnabled by mutableStateOf(false) // Track blur state
+
     // Initialization method, call to set up the blur feature
     fun init() {
         // Set the window background drawable to transparent initially
@@ -35,6 +43,31 @@ class Glass(
 
         // Enable dim behind the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+    }
+
+    // Method to wrap content with alpha control based on blur state
+    @Composable
+    public fun BlurAlphaWrapper(content: @Composable () -> Unit) {
+        // State to hold the current alpha value
+        var currentAlpha by remember { mutableStateOf(1f) }
+
+        // Listening for blur state changes
+        LaunchedEffect(isBlurEnabled) {
+            currentAlpha = if (isBlurEnabled) 0.7f else 1f // Adjust alpha when blur is enabled/disabled
+        }
+
+        // Composable Box that adjusts its alpha based on blur state
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    alpha = currentAlpha // Apply the dynamic alpha
+                }
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            // Your main component content goes here
+            content()
+        }
     }
 
     // Update the window background to a Material color scheme with specified transparency
@@ -57,26 +90,13 @@ class Glass(
         window.setBackgroundDrawable(windowBackgroundDrawable)
     }
 
-    // Private method to enable blur effect
-    private fun enable() {
-        window.setBackgroundBlurRadius(backgroundBlurRadius)
-        window.attributes.blurBehindRadius = blurBehindRadius
-        window.attributes = window.attributes
-    }
-
-    // Private method to disable blur effect
-    private fun disable() {
-        window.setBackgroundBlurRadius(0)
-        window.attributes.blurBehindRadius = 0
-        window.attributes = window.attributes
-    }
-
     // Listener to detect blur support change and adjust UI accordingly
     private fun setupWindowBlurListener() {
         val windowBlurEnabledListener: (Boolean) -> Unit = { blursEnabled ->
+            isBlurEnabled = blursEnabled
             updateWindowForBlurs(blursEnabled)
         }
-        window.decorView.addOnAttachStateChangeListener(object : OnAttachStateChangeListener {
+        window.decorView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewAttachedToWindow(v: View) {
                 window.windowManager.addCrossWindowBlurEnabledListener(windowBlurEnabledListener)
             }
