@@ -19,6 +19,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var glass: Glass
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Ui) // Apply main transparent theme
         glass = Glass(
             context = this,
             window = window,

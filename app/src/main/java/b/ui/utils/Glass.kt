@@ -53,7 +53,7 @@ class Glass(
 
         // Listening for blur state changes
         LaunchedEffect(isBlurEnabled) {
-            currentAlpha = if (isBlurEnabled) 0.7f else 1f // Adjust alpha when blur is enabled/disabled
+            currentAlpha = if (isBlurEnabled) 0.9f else 1f // Adjust alpha when blur is enabled/disabled
         }
 
         // Composable Box that adjusts its alpha based on blur state
@@ -71,24 +71,24 @@ class Glass(
     }
 
     // Update the window background to a Material color scheme with specified transparency
-    private fun updateWindowBackground(blurEnabled: Boolean) {
-        // Check if the system is in dark mode
-        val isDarkMode = (context.resources.configuration.uiMode and
-                android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
-                android.content.res.Configuration.UI_MODE_NIGHT_YES
-
-        // Select color based on the theme
-        val color = if (isDarkMode) {
-            ContextCompat.getColor(context, R.color.black) // Replace with your dark mode color resource
-        } else {
-            ContextCompat.getColor(context, R.color.white) // Replace with your light mode color resource
-        }
-
-        // Adjust the color for transparency
-        val alpha = if (blurEnabled) windowBackgroundAlphaWithBlur else windowBackgroundAlphaNoBlur
-        windowBackgroundDrawable = ColorDrawable(color).apply { this.alpha = alpha }
-        window.setBackgroundDrawable(windowBackgroundDrawable)
-    }
+//    private fun updateWindowBackground(blurEnabled: Boolean) {
+//        // Check if the system is in dark mode
+//        val isDarkMode = (context.resources.configuration.uiMode and
+//                android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
+//                android.content.res.Configuration.UI_MODE_NIGHT_YES
+//
+//        // Select color based on the theme
+//        val color = if (isDarkMode) {
+//            ContextCompat.getColor(context, R.color.black) // Replace with your dark mode color resource
+//        } else {
+//            ContextCompat.getColor(context, R.color.white) // Replace with your light mode color resource
+//        }
+//
+//        // Adjust the color for transparency
+//        val alpha = if (blurEnabled) windowBackgroundAlphaWithBlur else windowBackgroundAlphaNoBlur
+//        windowBackgroundDrawable = ColorDrawable(color).apply { this.alpha = alpha }
+//        window.setBackgroundDrawable(windowBackgroundDrawable)
+//    }
 
     // Listener to detect blur support change and adjust UI accordingly
     private fun setupWindowBlurListener() {
@@ -109,7 +109,7 @@ class Glass(
 
     // Update the window state based on whether blur is enabled
     private fun updateWindowForBlurs(blursEnabled: Boolean) {
-        updateWindowBackground(blursEnabled) // Call to update background color
+//        updateWindowBackground(blursEnabled) // Call to update background color
 
         window.setDimAmount(if (blursEnabled) dimAmountWithBlur else dimAmountNoBlur)
 
