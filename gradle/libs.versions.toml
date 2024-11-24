@@ -10,6 +10,10 @@ activityCompose = "1.9.2"
 composeBom = "2024.04.01"
 haze = "0.9.0-beta03"
 hazeMaterials = "0.9.0-beta03"
+navigationRuntimeKtx = "2.8.2"
+navigationCompose = "2.8.2"
+hazeVersion = "1.0.2"
+hazeMaterialsVersion = "1.0.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +32,10 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 haze-materials = { group = "dev.chrisbanes.haze", name = "haze-materials", version.ref = "hazeMaterials" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+dev-haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "hazeVersion" }
+dev-haze-materials = { group = "dev.chrisbanes.haze", name = "haze-materials", version.ref = "hazeMaterialsVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
