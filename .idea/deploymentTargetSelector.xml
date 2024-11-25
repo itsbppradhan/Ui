@@ -4,14 +4,17 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-11-23T07:20:59.594468100Z">
+        <DropdownSelection timestamp="2024-11-24T12:25:56.204452800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\itsbppradhan\.android\avd\Pixel_Fold_API_35.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\itsbppradhan\.android\avd\Pixel_6a_API_35.avd" />
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="BScaffold">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>

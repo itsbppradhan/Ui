@@ -18,6 +18,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import b.ui.components.BElevatedButton
+import b.ui.components.BScaffold
 import b.ui.ui.theme.UiTheme
 import b.ui.utils.Glass
 
@@ -42,16 +44,20 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
 @Composable
 fun Start(glass: Glass) {
     val navController = rememberNavController()
     glass.BlurAlphaWrapper {
-        Scaffold(
-            containerColor = Color.Transparent,
-            modifier = Modifier.fillMaxSize()
-        ) { innerPadding ->
-            NavigationComponent(navController = navController, modifier = Modifier.padding(innerPadding))
-        }
+//        Scaffold(
+//            containerColor = Color.Transparent,
+//            modifier = Modifier.fillMaxSize()
+//        ) { innerPadding ->
+//            NavigationComponent(navController = navController, modifier = Modifier.padding(innerPadding))
+//        }
+    BScaffold()
+
     }
 }
 
@@ -72,6 +78,7 @@ fun HomeScreen(navController: NavController) {
     Button(onClick = { navController.navigate("details") }) {
         Text(text = "Go to Details")
     }
+    BElevatedButton(onClick = {})
 }
 
 @Composable
