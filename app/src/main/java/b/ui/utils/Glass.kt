@@ -1,8 +1,7 @@
 package b.ui.utils
 
-import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -13,12 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.window.Popup
-import androidx.core.content.ContextCompat
-import b.ui.R
 
 class Glass(
-    private val context: Context,
+//    private val context: Context,
     private val window: Window,
     private val backgroundBlurRadius: Int = 80, // Default blur radius
     private val blurBehindRadius: Int = 20 // Default blur behind radius
@@ -26,9 +22,9 @@ class Glass(
 
     private var dimAmountWithBlur = 0.1f
     private var dimAmountNoBlur = 0.4f
-    private var windowBackgroundAlphaWithBlur = 170 // 80% transparency
-    private var windowBackgroundAlphaNoBlur = 255 // 100% opacity
-    private var windowBackgroundDrawable: ColorDrawable? = null
+//    private var windowBackgroundAlphaWithBlur = 170 // 80% transparency
+//    private var windowBackgroundAlphaNoBlur = 255 // 100% opacity
+//    private var windowBackgroundDrawable: ColorDrawable? = null
 
     var isBlurEnabled by mutableStateOf(false) // Track blur state
 
@@ -47,9 +43,9 @@ class Glass(
 
     // Method to wrap content with alpha control based on blur state
     @Composable
-    public fun BlurAlphaWrapper(content: @Composable () -> Unit) {
+    fun BlurAlphaWrapper(content: @Composable () -> Unit) {
         // State to hold the current alpha value
-        var currentAlpha by remember { mutableStateOf(1f) }
+        var currentAlpha by remember { mutableFloatStateOf(1f) }
 
         // Listening for blur state changes
         LaunchedEffect(isBlurEnabled) {

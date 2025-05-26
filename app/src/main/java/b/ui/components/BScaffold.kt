@@ -9,12 +9,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Call
@@ -38,10 +36,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
@@ -50,29 +48,26 @@ import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 
-enum class ScaffoldSampleMode {
-    Default,
-    Progressive,
-    Mask,
-}
 
+@Preview
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 fun BScaffold(
+    title: String = "BScaffold Title"
 ) {
     val hazeState = remember { HazeState() }
-    val gridState = rememberLazyGridState()
-    val showNavigationBar by remember(gridState) {
-        derivedStateOf { gridState.firstVisibleItemIndex == 0 }
+    val listState = rememberLazyListState() // Use LazyListState for LazyColumn
+    val showNavigationBar by remember(listState) {
+        derivedStateOf { listState.firstVisibleItemIndex == 0 } // Check for the first item
     }
 
-    val style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
+    val style = HazeMaterials.thin(MaterialTheme.colorScheme.background)
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         topBar = {
             LargeTopAppBar(
-                title = { Text("Scaffold Component B UI")},
+                title = { Text(title)},
                 navigationIcon = {
                     IconButton(
                         onClick = { /*todo*/ },
@@ -87,7 +82,8 @@ fun BScaffold(
                 ),
                 modifier = Modifier
                     .hazeChild(state = hazeState, style = style) {
-                        progressive = HazeProgressive.verticalGradient(startIntensity = 1f, endIntensity = 0f)
+                        progressive =
+                            HazeProgressive.verticalGradient(easing = EaseIn, preferPerformance = true, startIntensity = 1f, endIntensity = 0f)
 
                     }
                     .fillMaxWidth(),
@@ -110,14 +106,14 @@ fun BScaffold(
                 )
             }
         },
-        modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
 
     ) { contentPadding ->
-        LazyVerticalGrid(
-            state = gridState,
-            columns = GridCells.Adaptive(128.dp),
+        LazyColumn (
+            state = listState,
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = contentPadding,
             modifier = Modifier
                 .fillMaxSize()
@@ -128,8 +124,7 @@ fun BScaffold(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(4 / 2f),
-                ){Text("HELO ${index + 1}")}
+                ){Text("HELLO ${index + 1}")}
             }
         }
     }
